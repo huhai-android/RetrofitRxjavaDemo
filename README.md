@@ -6,9 +6,13 @@ https://blog.csdn.net/qq_16177199/article/list/1
 #添加抓包神器Stetho
 
 *1.添加jar包*
+<pre>
+    <code>
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     
+     </code>
+    </pre>   
 *2.初始化，推荐在application中进行初始化*
  
 <pre>
