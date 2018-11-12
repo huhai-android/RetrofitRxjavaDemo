@@ -4,13 +4,13 @@ rxjva+retrofit+mvp
 https://blog.csdn.net/qq_16177199/article/list/1
 
 #添加抓包神器Stetho
-1.添加jar包
+*1.添加jar包*
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     
-2.初始化，推荐在application中进行初始化
+*2.初始化，推荐在application中进行初始化*
  
- <pre>
+ <code>
  Stetho.initialize(
                  Stetho.newInitializerBuilder(this)
                          .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
@@ -24,8 +24,8 @@ https://blog.csdn.net/qq_16177199/article/list/1
  <code>
                  
                  
-3.添加拦截器addNetworkInterceptor
- <pre> 
+*3.添加拦截器addNetworkInterceptor*
+ <code>
  OkHttpClient mOkHttpClient=new OkHttpClient.Builder()
                 .connectTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
                 .readTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
