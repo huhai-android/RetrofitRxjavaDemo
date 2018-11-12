@@ -1,5 +1,7 @@
 package com.example.huhai.retrofitrxjavademo.net;
 
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -25,6 +27,7 @@ public class RetrofitFactory {
                 .writeTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
                 .addInterceptor(InterceptorUtil.HeaderInterceptor())
                 .addInterceptor(InterceptorUtil.LogInterceptor())//添加日志拦截器
+                .addNetworkInterceptor(new StethoInterceptor()) //添加抓包工具
                 .build();
         Retrofit mRetrofit=new Retrofit.Builder()
                 .baseUrl(HttpConfig.BASE_URL)

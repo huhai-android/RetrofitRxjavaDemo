@@ -57,7 +57,7 @@ public class LoginActivity
 
     @Override
     public void showToast(String msg) {
-        Toast.makeText(LoginActivity.this,msg,Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class LoginActivity
 
     @Override
     public void toMainActivity() {
-        Toast.makeText(LoginActivity.this,"跳转主界面",Toast.LENGTH_SHORT).show();
+        Toast.makeText(LoginActivity.this, "跳转主界面", Toast.LENGTH_SHORT).show();
     }
 
     //------------------以上全是跟界面相关的处理逻辑----------------------------------

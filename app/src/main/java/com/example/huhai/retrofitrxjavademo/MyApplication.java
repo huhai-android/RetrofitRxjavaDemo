@@ -2,6 +2,9 @@ package com.example.huhai.retrofitrxjavademo;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
+
+import com.facebook.stetho.Stetho;
 
 /*
  *  @项目名：  RetrofitRxjavaDemo
@@ -24,5 +27,20 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mContext=this;
+        //开启抓包谷歌浏览器抓包
+        opennetWorkDebug();
+    }
+
+    private void opennetWorkDebug() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
+                        .build());
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //
+                .detectAll() //
+                .penaltyLog() //
+                .penaltyDeath() //
+                .build());
     }
 }
