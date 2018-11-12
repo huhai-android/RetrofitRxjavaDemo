@@ -10,7 +10,8 @@ https://blog.csdn.net/qq_16177199/article/list/1
     
 2.初始化，推荐在application中进行初始化
  
-   Stetho.initialize(
+ <pre>
+ Stetho.initialize(
                  Stetho.newInitializerBuilder(this)
                          .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                          .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
@@ -20,9 +21,11 @@ https://blog.csdn.net/qq_16177199/article/list/1
                  .penaltyLog() //
                  .penaltyDeath() //
                  .build());
+ <code>
                  
                  
 3.添加拦截器addNetworkInterceptor
+ <pre> 
  OkHttpClient mOkHttpClient=new OkHttpClient.Builder()
                 .connectTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
                 .readTimeout(HttpConfig.HTTP_TIME, TimeUnit.SECONDS)
@@ -31,8 +34,7 @@ https://blog.csdn.net/qq_16177199/article/list/1
                 .addInterceptor(InterceptorUtil.LogInterceptor())//添加日志拦截器
                 .addNetworkInterceptor(new StethoInterceptor()) //添加抓包工具
                 .build();
-   
- 
-    
+
+<code>
     
     
