@@ -45,4 +45,5 @@ https://blog.csdn.net/qq_16177199/article/list/1
  </code>
 </pre> 
     
-    
+ *4.添加自动打包，自动打debug包或者release包*
+ 

@@ -22,8 +22,68 @@ android {
         targetCompatibility 1.8
         sourceCompatibility 1.8
     }
-}
 
+    signingConfigs {
+        debug {
+            //调试版本的签名配置
+            storeFile file("../huhai.jks")
+            storePassword '198810zw'
+            keyAlias 'huhai'
+            keyPassword '198810zw'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        release {
+            storeFile file("../huhai.jks")
+            storePassword '198810zw'
+            keyAlias 'huhai'
+            keyPassword '198810zw'
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    /**
+     * buildTypes必须放在signingConfigs后面
+     */
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "URL",   "\"http://www.baidu.com/\""
+            buildConfigField "Boolean", "IS_DEBUG",   "false"
+        }
+        debug {
+            signingConfig signingConfigs.debug
+            debuggable true
+            jniDebuggable true
+            renderscriptDebuggable true
+            minifyEnabled false
+            buildConfigField "String", "URL",   "\"www.develop.com\""
+            buildConfigField "Boolean", "IS_DEBUG",   "true"
+
+        }
+    }
+
+
+    //打包命名
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            if (variant.buildType.name.equals('release')) {
+                outputFileName = "huhai-V${defaultConfig.versionName}-${getTime()}-release.apk"
+            } else if (variant.buildType.name.equals('debug')) {
+                outputFileName = "huhai-V${defaultConfig.versionName}-${getTime()}-debug.apk"
+            }
+        }
+    }
+
+
+}
+def getTime() {
+    return new Date().format("yyyyMMdd HHmm", TimeZone.getDefault());
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'

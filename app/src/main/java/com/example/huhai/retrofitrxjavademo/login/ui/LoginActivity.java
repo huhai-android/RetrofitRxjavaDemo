@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.huhai.retrofitrxjavademo.BuildConfig;
 import com.example.huhai.retrofitrxjavademo.R;
 import com.example.huhai.retrofitrxjavademo.base.BaseActivity;
 import com.example.huhai.retrofitrxjavademo.login.contract.LoginContract;
@@ -17,6 +18,7 @@ public class LoginActivity
     private TextView mTextLoginStutes;
     private TextView mBtnLogin;
     private TextView mTvDialogStatus;
+    private TextView mIsDebug;
 
 
     @Override
@@ -25,6 +27,7 @@ public class LoginActivity
         mTextLoginStutes = findViewById(R.id.tv_login_status);
         mBtnLogin = findViewById(R.id.btn_login);
         mTvDialogStatus = findViewById(R.id.tv_dialog_status);
+        mIsDebug = findViewById(R.id.isdebug);
         initlistener();
     }
 
@@ -40,6 +43,13 @@ public class LoginActivity
                 mPresenter.login(number, password);
             }
         });
+
+        if (BuildConfig.IS_DEBUG){
+            mIsDebug.setText("测试环境"+BuildConfig.URL);
+
+        }else {
+            mIsDebug.setText("正式环境"+BuildConfig.URL);
+        }
     }
 
     @Override
