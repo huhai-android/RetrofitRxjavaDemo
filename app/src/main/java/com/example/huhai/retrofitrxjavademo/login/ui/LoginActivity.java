@@ -1,5 +1,8 @@
 package com.example.huhai.retrofitrxjavademo.login.ui;
 
+import android.content.Intent;
+import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,7 +22,6 @@ public class LoginActivity
     private TextView mBtnLogin;
     private TextView mTvDialogStatus;
     private TextView mIsDebug;
-
 
     @Override
     protected void init() {
@@ -44,11 +46,11 @@ public class LoginActivity
             }
         });
 
-        if (BuildConfig.IS_DEBUG){
-            mIsDebug.setText("测试环境"+BuildConfig.URL);
+        if (BuildConfig.IS_DEBUG) {
+            mIsDebug.setText("测试环境" + BuildConfig.URL);
 
-        }else {
-            mIsDebug.setText("正式环境"+BuildConfig.URL);
+        } else {
+            mIsDebug.setText("正式环境" + BuildConfig.URL);
         }
     }
 
@@ -98,4 +100,27 @@ public class LoginActivity
     }
 
     //------------------以上全是跟界面相关的处理逻辑----------------------------------
+
+    CountDownTimer timer = new CountDownTimer(5000, 1000) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+            int remainTime = (int) (millisUntilFinished / 1000L);
+            Log.d("LoginActivity","======remainTime=====" + remainTime);
+        }
+
+        @Override
+        public void onFinish() {
+            Intent intent = new Intent(LoginActivity.this, H5activity.class);
+            startActivity(intent);
+            timer.cancel();
+        }
+    }.start();
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        timer.start();
+    }
 }

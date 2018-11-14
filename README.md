@@ -47,3 +47,7 @@ https://blog.csdn.net/qq_16177199/article/list/1
     
  *4.添加自动打包，自动打debug包或者release包*
  
+ 
+ 
+ 
+  *5.添加自动刷博客的流量的代码*
