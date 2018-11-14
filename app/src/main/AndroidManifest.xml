@@ -43,6 +43,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".login.ui.H5activity" />
+        <activity android:name=".login.ui.BolgUrlEditActivity" />
     </application>
 
 </manifest>

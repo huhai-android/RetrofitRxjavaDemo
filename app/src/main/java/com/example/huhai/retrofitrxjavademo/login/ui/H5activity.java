@@ -8,6 +8,9 @@ import android.webkit.WebViewClient;
 
 import com.example.huhai.retrofitrxjavademo.R;
 import com.example.huhai.retrofitrxjavademo.base.BaseActivity;
+import com.example.huhai.retrofitrxjavademo.bean.blogUrl;
+import com.example.huhai.retrofitrxjavademo.manager.Dbhelper;
+import com.example.huhai.retrofitrxjavademo.utils.SpUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,19 +25,20 @@ import java.util.Random;
  *  @描述：
  */
 public class H5activity extends BaseActivity {
+    private static final String TAG = "H5activity";
     private List<String> url = new ArrayList<>();
     private Random random=new Random();
+    private List<blogUrl> data;
+   private CountDownTimer timer;
     @Override
     protected void init() {
-        url.add("https://blog.csdn.net/qq_16177199/article/details/84023681");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/83651426");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/83541133");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/79668003");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/79668003");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/79542086");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/79526442");
-        url.add("https://blog.csdn.net/qq_16177199/article/details/79138917");
+        searchData();
+        inittimer();
+        initwebview();
 
+    }
+
+    private void initwebview() {
         WebView webView = findViewById(R.id.webview);
         WebSettings webSettings = webView.getSettings();
         //设置WebView属性，能够执行Javascript脚本
@@ -43,11 +47,31 @@ public class H5activity extends BaseActivity {
         webSettings.setAllowFileAccess(true);
         //设置支持缩放
         webSettings.setBuiltInZoomControls(true);
-        webView.loadUrl(url.get(random.nextInt(url.size())));
+        webView.loadUrl(data.get(random.nextInt(data.size())).getName()+"");
 
         webView.setWebViewClient(new WebViewClient());
-
     }
+
+    private void inittimer() {
+        int time=  SpUtils.getInt(H5activity.this, "scanTime", 5);
+        timer = new CountDownTimer(time*1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int remainTime = (int) (millisUntilFinished / 1000L);
+            }
+
+            @Override
+            public void onFinish() {
+                finish();
+            }
+        }.start();
+    }
+
+    private void searchData() {
+        data = Dbhelper.getDaoSession().getBlogUrlDao().loadAll();
+        Log.d(TAG, data.toString());
+    }
+
 
     @Override
     protected int bindLayoutId() {
@@ -58,26 +82,6 @@ public class H5activity extends BaseActivity {
     protected Object createPresenter() {
         return null;
     }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        timer.start();
-    }
-
-    CountDownTimer timer = new CountDownTimer(5000, 1000) {
-        @Override
-        public void onTick(long millisUntilFinished) {
-
-            int remainTime = (int) (millisUntilFinished / 1000L);
-            Log.d("H5activity", "======remainTime=====" + remainTime);
-        }
-
-        @Override
-        public void onFinish() {
-            finish();
-        }
-    }.start();
 
 
     @Override

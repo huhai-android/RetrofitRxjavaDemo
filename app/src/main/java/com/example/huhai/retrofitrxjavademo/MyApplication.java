@@ -2,8 +2,8 @@ package com.example.huhai.retrofitrxjavademo;
 
 import android.app.Application;
 import android.content.Context;
-import android.os.StrictMode;
 
+import com.example.huhai.retrofitrxjavademo.manager.Dbhelper;
 import com.facebook.stetho.Stetho;
 
 /*
@@ -16,6 +16,7 @@ import com.facebook.stetho.Stetho;
  */
 public class MyApplication extends Application {
     public static Context mContext;
+
     /**
      * 得到上下文
      */
@@ -26,9 +27,19 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        mContext=this;
+        mContext = this;
         //开启抓包谷歌浏览器抓包
-        opennetWorkDebug();
+        if (BuildConfig.IS_DEBUG){
+            opennetWorkDebug();
+        }
+        //初始化数据库
+        initsql();
+
+    }
+
+    private void initsql() {
+
+        Dbhelper.initGreenDao();
     }
 
     private void opennetWorkDebug() {
@@ -37,10 +48,5 @@ public class MyApplication extends Application {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(Stetho.defaultInspectorModulesProvider(this))
                         .build());
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //
-                .detectAll() //
-                .penaltyLog() //
-                .penaltyDeath() //
-                .build());
     }
 }

@@ -18,10 +18,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_marginTop="30dp"
         android:id="@+id/tv_login_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="登陆状态"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -30,10 +30,10 @@
 
 
     <TextView
-        android:layout_marginTop="30dp"
         android:id="@+id/tv_dialog_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:text="dialog显示状态"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -41,22 +41,64 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:layout_marginTop="30dp"
         android:id="@+id/btn_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="登陆" />
-
-    <Button
         android:layout_marginTop="30dp"
-        android:id="@+id/btn_web"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="跳转" />
+        android:text="登陆"
+       />
+
+
     <TextView
         android:id="@+id/isdebug"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text=""
         />
+
+    <Button
+        android:id="@+id/btn_web"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="添加博客访问地址" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="设置浏览时间s"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存时间" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="开始浏览博客" />
+
+        <Button
+            android:id="@+id/btn_stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="停止浏览博客" />
+    </LinearLayout>
+
 </LinearLayout>

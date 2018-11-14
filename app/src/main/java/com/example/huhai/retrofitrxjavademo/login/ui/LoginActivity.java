@@ -2,8 +2,10 @@ package com.example.huhai.retrofitrxjavademo.login.ui;
 
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import com.example.huhai.retrofitrxjavademo.R;
 import com.example.huhai.retrofitrxjavademo.base.BaseActivity;
 import com.example.huhai.retrofitrxjavademo.login.contract.LoginContract;
 import com.example.huhai.retrofitrxjavademo.login.presenter.LoginPresenter;
+import com.example.huhai.retrofitrxjavademo.utils.SpUtils;
 
 public class LoginActivity
         extends BaseActivity<LoginPresenter> implements LoginContract.View {
@@ -22,6 +25,12 @@ public class LoginActivity
     private TextView mBtnLogin;
     private TextView mTvDialogStatus;
     private TextView mIsDebug;
+    private View mBtnblog;
+    private View btnStart;
+    private View btnStop;
+    private View btnSave;
+    private EditText ettime;
+    private boolean isStart = false;
 
     @Override
     protected void init() {
@@ -30,7 +39,18 @@ public class LoginActivity
         mBtnLogin = findViewById(R.id.btn_login);
         mTvDialogStatus = findViewById(R.id.tv_dialog_status);
         mIsDebug = findViewById(R.id.isdebug);
+        mBtnblog = findViewById(R.id.btn_web);
+        btnStart = findViewById(R.id.btn_start);
+        btnStop = findViewById(R.id.btn_stop);
+        btnSave = findViewById(R.id.btn_save);
+        ettime = findViewById(R.id.et_time);
+        initview();
         initlistener();
+    }
+
+    private void initview() {
+        int time = SpUtils.getInt(LoginActivity.this, "scanTime", 5);
+        ettime.setText(time + "");
     }
 
     private void initlistener() {
@@ -52,6 +72,39 @@ public class LoginActivity
         } else {
             mIsDebug.setText("正式环境" + BuildConfig.URL);
         }
+        mBtnblog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginActivity.this, BolgUrlEditActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.start();
+                isStart = true;
+            }
+        });
+        btnStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timer.cancel();
+                isStart = false;
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (TextUtils.isEmpty(ettime.getText().toString())) {
+                    Toast.makeText(LoginActivity.this, "不能为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    SpUtils.getInt(LoginActivity.this, "scanTime", Integer.parseInt(ettime.getText().toString()));
+                    Toast.makeText(LoginActivity.this, "保存成功", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     @Override
@@ -85,7 +138,6 @@ public class LoginActivity
 
     @Override
     public void showDialog() {
-        //
         mTvDialogStatus.setText("正在显示dialoig");
     }
 
@@ -101,12 +153,12 @@ public class LoginActivity
 
     //------------------以上全是跟界面相关的处理逻辑----------------------------------
 
-    CountDownTimer timer = new CountDownTimer(5000, 1000) {
+    CountDownTimer timer = new CountDownTimer(2000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
 
             int remainTime = (int) (millisUntilFinished / 1000L);
-            Log.d("LoginActivity","======remainTime=====" + remainTime);
+            Log.d("LoginActivity", "======remainTime=====" + remainTime);
         }
 
         @Override
@@ -115,12 +167,15 @@ public class LoginActivity
             startActivity(intent);
             timer.cancel();
         }
-    }.start();
+    };
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        timer.start();
+        if (isStart) {
+            timer.start();
+        }
+
     }
 }

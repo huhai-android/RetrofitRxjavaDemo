@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+// In your app projects build.gradle file:
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -84,6 +87,15 @@ android {
 def getTime() {
     return new Date().format("yyyyMMdd HHmm", TimeZone.getDefault());
 }
+greendao {
+    schemaVersion 2//数据库版本号
+    daoPackage 'com.example.huhai.retrofitrxjavademo.greendao'//设置DaoMaster、DaoSession、Dao包名
+    targetGenDir 'src/main/java'//设置DaoMaster、DaoSession、Dao目录
+    //targetGenDirTest：设置生成单元测试目录
+    //generateTests：设置自动生成单元测试用例
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -100,8 +112,9 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.5.0'
     compile 'com.squareup.okhttp3:logging-interceptor:3.6.0'
-//抓包工具
+    //抓包工具
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
-
+    //greendao
+    implementation 'org.greenrobot:greendao:3.2.2' // add library
 }
